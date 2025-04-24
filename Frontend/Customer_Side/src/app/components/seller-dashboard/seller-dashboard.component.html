@@ -1,0 +1,83 @@
+<div class="container my-5">
+  <h2>Seller Dashboard</h2>
+
+  <!-- Cards -->
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card text-white bg-c-blue">
+        <div class="card-body">
+          <h5 class="card-title">Products in Stock</h5>
+          <p class="card-text display-6">{{ sellerProducts.length }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-white bg-c-green">
+        <div class="card-body">
+          <h5 class="card-title">Total Orders</h5>
+          <p class="card-text display-6">{{ sellerOrders.length }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-white bg-c-yellow">
+        <div class="card-body">
+          <h5 class="card-title"><i class="fa fa-cart-plus f-left me-2"></i>Total Profit</h5>
+          <p class="card-text display-6">{{ totalProfit | currency }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Most Sold Product -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Most Sold Product</h5>
+      <div *ngIf="mostSoldProducts.length > 0">
+        <p><strong>Product:</strong> {{ mostSoldProducts[0].productName }}</p>
+        <p><strong>Quantity Sold:</strong> {{ mostSoldProducts[0].soldQty }}</p>
+        <p><strong>Total Revenue:</strong> {{ mostSoldProducts[0].totalRevenue | currency }}</p>
+        <p><strong>Total Profit:</strong> {{ mostSoldProducts[0].totalProfit | currency }}</p>
+      </div>
+      <div *ngIf="mostSoldProducts.length === 0">
+        <p>No sales data available.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Year Dropdown -->
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-secondary" id="yearDropdown" ngbDropdownToggle>
+          {{ selectedYear }}
+        </button>
+        <div ngbDropdownMenu aria-labelledby="yearDropdown">
+          <button ngbDropdownItem *ngFor="let year of availableYears" (click)="onYearChange(year)">
+            {{ year }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Orders Over Time</h5>
+          <canvas id="ordersChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Profit Over Time</h5>
+          <canvas id="profitChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="modal-header bg-primary-gradient text-white">
+  <h4 class="modal-title">
+    <i class="bi bi-box-seam me-2"></i>{{ product ? 'Edit Product' : 'Add Product' }}
+  </h4>
+  <button type="button" class="btn-close btn-close-white" (click)="activeModal.dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="row g-3">
+    <!-- Product Name -->
+    <div class="col-md-12">
+      <label for="name" class="form-label">Product Name</label>
+      <input type="text" class="form-control" id="name" formControlName="name">
+      <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="text-danger small mt-1">
+        Product name is required.
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="col-md-12">
+      <label for="description" class="form-label">Description</label>
+      <textarea class="form-control" id="description" formControlName="description" rows="3"></textarea>
+      <div *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched" 
+           class="text-danger small mt-1">
+        Description is required.
+      </div>
+    </div>
+
+    <!-- Prices & Stock -->
+    <div class="col-md-4">
+      <label for="costPrice" class="form-label">Cost Price</label>
+      <input type="number" class="form-control" id="costPrice" formControlName="costPrice">
+      <div *ngIf="productForm.get('costPrice')?.invalid && productForm.get('costPrice')?.touched" 
+           class="text-danger small mt-1">
+        Valid cost price required.
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <label for="soldPrice" class="form-label">Sell Price</label>
+      <input type="number" class="form-control" id="soldPrice" formControlName="soldPrice">
+      <div *ngIf="productForm.get('soldPrice')?.invalid && productForm.get('soldPrice')?.touched" 
+           class="text-danger small mt-1">
+        Valid sell price required.
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <label for="mainStock" class="form-label">Stock Quantity</label>
+      <input type="number" class="form-control" id="mainStock" formControlName="mainStock">
+      <div *ngIf="productForm.get('mainStock')?.invalid && productForm.get('mainStock')?.touched" 
+           class="text-danger small mt-1">
+        Valid stock quantity required.
+      </div>
+    </div>
+
+    <!-- Category & Seller -->
+    <div class="col-md-6">
+      <label for="categoryId" class="form-label">Category</label>
+      <select class="form-select" id="categoryId" formControlName="categoryId">
+        <option value="">Select category</option>
+        <option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</option>
+      </select>
+      <div *ngIf="productForm.get('categoryId')?.invalid && productForm.get('categoryId')?.touched" 
+           class="text-danger small mt-1">
+        Category is required.
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label for="sellerId" class="form-label">Seller</label>
+      <select class="form-select" id="sellerId" formControlName="sellerId">
+        <option value="">Select seller</option>
+        <option *ngFor="let seller of sellers" [value]="seller._id">
+          {{ seller.firstName }} {{ seller.lastName }}
+        </option>
+      </select>
+      <div *ngIf="productForm.get('sellerId')?.invalid && productForm.get('sellerId')?.touched" 
+           class="text-danger small mt-1">
+        Seller is required.
+      </div>
+    </div>
+
+    <!-- Images -->
+    <div class="col-md-12">
+      <label for="images" class="form-label">Product Images</label>
+      <input type="file" class="form-control" id="images" (change)="onFileChange($event)" multiple>
+      <div class="form-text">Maximum 5MB per image (JPEG, PNG, GIF)</div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="col-md-12 mt-4 border-top pt-3">
+      <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid || isSubmitting">
+          <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+          {{ product ? 'Update Product' : 'Create Product' }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

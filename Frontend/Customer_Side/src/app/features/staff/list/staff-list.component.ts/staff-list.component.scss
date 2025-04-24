@@ -1,0 +1,17 @@
+.card {
+  margin: 1rem;
+  
+  .btn-group {
+    .btn {
+      padding: 0.25rem 0.5rem;
+    }
+  }
+}
+
+.card-header {
+  .btn-light {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+  }
+} 

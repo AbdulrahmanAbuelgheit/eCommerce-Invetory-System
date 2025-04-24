@@ -1,0 +1,113 @@
+<mat-toolbar mat-elevation-z3 class="shadow-sm">
+    <button mat-raised-button color="warn" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+    </button>
+</mat-toolbar>
+<div class="container my-5">
+    <!-- Product Search Section -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Add Product to Order</h5>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Enter Product ID" [(ngModel)]="productId">
+                <button class="btn btn-primary" (click)="searchProduct()">Search</button>
+            </div>
+
+            <!-- Product Info Card -->
+            <div *ngIf="product" class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text"><strong>Price:</strong> {{ product.price | currency }}</p>
+                    <p class="card-text"><strong>Stock:</strong> {{ product.quantityAvailable }}</p>
+                    <div class="input-group">
+                        <input type="number" class="form-control" [(ngModel)]="selectedQuantity" min="1"
+                            [max]="product.quantityAvailable">
+                        <button class="btn btn-success" (click)="addToOrder()">Add to Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Order Items Table -->
+            <div class="card mb-4" style="max-height: 400px; min-height: 400px; overflow-y: auto;">
+                <div class="card-body">
+                    <h5 class="card-title">Order Items</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of orderItems">
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.price | currency }}</td>
+                                <td>{{ item.price * item.quantity | currency }}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" (click)="removeFromOrder(item.productId)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5>Total: {{ getOrderTotal() | currency }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- Customer Info Form -->
+            <div class="card mb-4" style="min-height: 400px;">
+                <div class="card-body">
+                    <h5 class="card-title">Customer Information</h5>
+                    <form #customerForm="ngForm">
+                        <div class="mb-3">
+                            <label for="customerName" class="form-label">Customer Name</label>
+                            <input type="text" class="form-control" id="customerName" [(ngModel)]="customerName"
+                                name="customerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" [(ngModel)]="phone" name="phone" required
+                                pattern="01[0-2]\d{8}">
+                            <small class="form-text text-muted">Must start with 010, 011, or 012 and be 11 digits
+                                long.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Payment Method</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="cash"
+                                        value="Cash" [(ngModel)]="paymentMethod" required>
+                                    <label class="form-check-label" for="cash">Cash</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="card"
+                                        value="Card" [(ngModel)]="paymentMethod" required>
+                                    <label class="form-check-label" for="card">Card</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Submit Order Button -->
+    <button class="btn btn-primary btn-lg" (click)="submitOrder()" style="width: 100%;"
+        [disabled]="!customerForm.form.valid || orderItems.length === 0">
+        <i class="bi bi-check-circle me-1"></i>Submit Order
+    </button>
+</div>

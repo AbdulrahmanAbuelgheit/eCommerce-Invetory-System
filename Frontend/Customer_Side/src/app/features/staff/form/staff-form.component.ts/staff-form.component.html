@@ -1,0 +1,63 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="modal-header">
+    <h4 class="modal-title">Add New Staff Member</h4>
+    <button type="button" class="btn-close" (click)="activeModal.dismiss()"></button>
+  </div>
+
+  <div class="modal-body">
+    @if (error) {
+      <div class="alert alert-danger">{{ error }}</div>
+    }
+
+    <!-- Hidden branchId field -->
+    <input type="hidden" formControlName="branchId">
+
+    <div class="mb-3">
+      <label class="form-label">Full Name</label>
+      <input type="text" class="form-control" formControlName="name">
+      @if (form.controls.name.invalid && (form.controls.name.dirty || form.controls.name.touched)) {
+        <div class="text-danger">
+          Name is required and must be at least 3 characters
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-control" formControlName="email">
+      @if (form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched)) {
+        <div class="text-danger">
+          Valid email is required
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Role</label>
+      <select class="form-select" formControlName="role">
+        <option value="cashier">Cashier</option>
+        <option value="manager">Manager</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-control" formControlName="password">
+      @if (form.controls.password.invalid) {
+        <div class="text-danger">
+          Password must be at least 8 characters
+        </div>
+      }
+    </div>
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid || submitting">
+        @if (submitting) {
+          <span class="spinner-border spinner-border-sm"></span>
+        } @else {
+          Create Staff
+        }
+      </button>
+    </div>
+  </div>
+</form>

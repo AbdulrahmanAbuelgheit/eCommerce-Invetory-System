@@ -1,0 +1,270 @@
+@import 'node_modules/bootstrap/scss/_functions.scss';
+@import 'node_modules/bootstrap/scss/_variables.scss';
+@import 'node_modules/bootstrap/scss/_mixins.scss';
+/* Container and Layout */
+.container-fluid {
+  padding: 2rem;
+}
+
+.row.g-4 {
+  margin: -0.5rem;
+}
+
+/* Branch List Card */
+.branch-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    padding: 1.5rem;
+    border-bottom: none;
+  }
+
+  .list-group-item {
+    padding: 1rem;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: rgba(0, 123, 255, 0.1);
+    }
+
+    &.active {
+      background-color: rgba(0, 123, 255, 0.2);
+      border-left: 4px solid #007bff;
+    }
+
+    .badge {
+      font-size: 0.9rem;
+      padding: 0.5rem 0.75rem;
+    }
+  }
+}
+
+/* Inventory Card */
+.inventory-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, #343a40, #1d2124);
+    padding: 1.5rem;
+    border-bottom: none;
+
+    .btn-success {
+      background-color: #28a745;
+      border: none;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #218838;
+      }
+    }
+  }
+}
+
+/* Product Cards */
+.product-card {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .stock-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+    background-color: rgba(40, 167, 69, 0.9);
+    border-radius: 20px;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .badge.bg-purple {
+      background-color: #6f42c1;
+      font-size: 0.9rem;
+      padding: 0.5rem 0.75rem;
+    }
+
+    .btn-group {
+      .btn {
+        margin-right: 0.5rem;
+        border-radius: 20px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+        }
+
+        &.btn-outline-primary {
+          border-color: #007bff;
+          color: #007bff;
+
+          &:hover {
+            background-color: #007bff;
+            color: #fff;
+          }
+        }
+
+        &.btn-outline-danger {
+          border-color: #dc3545;
+          color: #dc3545;
+
+          &:hover {
+            background-color: #dc3545;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+
+  .spinner-border {
+    width: 3rem;
+    height: 3rem;
+    color: #007bff;
+  }
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 2rem;
+
+  .page-item {
+    margin: 0 0.25rem;
+
+    .page-link {
+      border-radius: 20px;
+      padding: 0.5rem 1rem;
+      color: #007bff;
+      border: 1px solid #007bff;
+      transition: background-color 0.3s ease, color 0.3s ease;
+
+      &:hover {
+        background-color: #007bff;
+        color: #fff;
+      }
+    }
+
+    &.active .page-link {
+      background-color: #007bff;
+      color: #fff;
+      border-color: #007bff;
+    }
+
+    &.disabled .page-link {
+      color: #6c757d;
+      border-color: #dee2e6;
+    }
+  }
+}
+
+/* Empty State */
+.empty-state {
+  padding: 4rem 0;
+  text-align: center;
+
+  .bi-boxes {
+    font-size: 4rem;
+    color: #6c757d;
+  }
+
+  h5 {
+    margin-top: 1rem;
+    color: #6c757d;
+  }
+
+  p {
+    color: #6c757d;
+  }
+}
+
+/* Branch List Buttons */
+.branch-item .btn-group {
+  display: flex;
+  gap: 0.5rem;
+
+  .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    border-radius: 20px;
+  }
+}
+
+/* Add Branch Button */
+.card-header .btn-light {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}

@@ -1,0 +1,100 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="cashier-form">
+  <div class="modal-header">
+    <h4 class="modal-title">{{ cashier ? 'Edit' : 'Add' }} Cashier</h4>
+    <button type="button" class="btn-close" (click)="activeModal.dismiss()"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3">
+      <!-- First Name -->
+      <div class="col-md-6">
+        <label class="form-label">First Name</label>
+        <input type="text" class="form-control" formControlName="firstName">
+        <div *ngIf="f['firstName'].touched && f['firstName'].errors" class="text-danger">
+          <div *ngIf="f['firstName'].errors['required']">First Name is required.</div>
+          <div *ngIf="f['firstName'].errors['minlength']">Must be at least 2 characters.</div>
+        </div>
+      </div>
+
+      <!-- Last Name -->
+      <div class="col-md-6">
+        <label class="form-label">Last Name</label>
+        <input type="text" class="form-control" formControlName="lastName">
+        <div *ngIf="f['lastName'].touched && f['lastName'].errors" class="text-danger">
+          <div *ngIf="f['lastName'].errors['required']">Last Name is required.</div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="col-12">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" formControlName="email">
+        <div *ngIf="f['email'].touched && f['email'].errors" class="text-danger">
+          <div *ngIf="f['email'].errors['required']">Email is required.</div>
+          <div *ngIf="f['email'].errors['email']">Invalid email format.</div>
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div class="col-md-6">
+        <label class="form-label">Phone</label>
+        <input type="tel" class="form-control" formControlName="phone1">
+        <div *ngIf="f['phone1'].touched && f['phone1'].errors" class="text-danger">
+          <div *ngIf="f['phone1'].errors['required']">Phone is required.</div>
+          <div *ngIf="f['phone1'].errors['egyptianPhone']">Invalid Egyptian number.</div>
+        </div>
+      </div>
+
+      <!-- SSN -->
+      <div class="col-md-6">
+        <label class="form-label">SSN</label>
+        <input type="text" class="form-control" formControlName="SSN">
+        <div *ngIf="f['SSN'].touched && f['SSN'].errors" class="text-danger">
+          <div *ngIf="f['SSN'].errors['required']">SSN is required.</div>
+          <div *ngIf="f['SSN'].errors['pattern']">Must be 14 digits.</div>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="col-md-6">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" formControlName="password">
+        <div *ngIf="f['password'].touched && f['password'].errors" class="text-danger">
+          <div *ngIf="f['password'].errors['required']">Password is required.</div>
+          <div *ngIf="f['password'].errors['minlength']">Minimum 9 characters.</div>
+          <div *ngIf="f['password'].errors['passwordPattern']">Requires uppercase and number.</div>
+        </div>
+      </div>
+
+      <!-- Branch -->
+      <div class="col-md-6">
+        <label class="form-label">Branch</label>
+        <select class="form-select" formControlName="branchId">
+          <option [ngValue]="null" disabled>Select a branch</option>
+          <option *ngFor="let branch of branches" [value]="branch._id">
+            {{ branch.name }} - {{ branch.location }}
+          </option>
+        </select>
+        <div *ngIf="f['branchId'].touched && f['branchId'].errors" class="text-danger">
+          <div *ngIf="f['branchId'].errors['required']">Branch is required.</div>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="col-12">
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" formControlName="isActive" id="statusSwitch">
+          <label class="form-check-label" for="statusSwitch">Active Status</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancel</button>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid || isSubmitting">
+      <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm"></span>
+      {{ isSubmitting ? 'Saving...' : (cashier ? 'Update' : 'Save') }}
+    </button>
+  </div>
+</form>

@@ -1,0 +1,33 @@
+.unauthorized-container {
+    text-align: center;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 2rem auto;
+    background: rgba(255, 0, 0, 0.05);
+    border: 1px solid rgba(255, 0, 0, 0.2);
+    border-radius: 8px;
+  
+    h1 {
+      color: #ef5350;
+      margin-bottom: 1rem;
+    }
+  
+    p {
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+  
+    button {
+      padding: 0.75rem 1.5rem;
+      background: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+  
+      &:hover {
+        background: #1976d2;
+      }
+    }
+  }

@@ -1,0 +1,10 @@
+<div class="mb-3">
+    <label class="form-label">Egyptian Phone Number</label>
+    <input type="tel" class="form-control" 
+           [formControl]="phoneControl"
+           placeholder="01012345678">
+    <div *ngIf="phoneControl.invalid && phoneControl.touched" 
+         class="text-danger small">
+      Valid format: 010, 011, or 012 followed by 8 digits
+    </div>
+</div>

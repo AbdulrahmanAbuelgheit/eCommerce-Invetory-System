@@ -1,0 +1,27 @@
+.bg-primary-gradient {
+    background: linear-gradient(135deg, #3f51b5 0%, darken(#3f51b5, 15%) 100%);
+  }
+  
+  .table {
+    --bs-table-hover-bg: rgba(63, 81, 181, 0.05);
+    
+    th {
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+    }
+    
+    tr:not(:last-child) {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+  }
+  
+  .btn-light {
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+  }

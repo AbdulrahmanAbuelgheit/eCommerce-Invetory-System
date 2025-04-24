@@ -1,0 +1,43 @@
+/* Resize the image */
+.product-image {
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    object-fit: fill; /* Ensures the image maintains its aspect ratio */
+    border-radius: 4px; /* Optional: Adds rounded corners */
+  }
+  
+  /* Hover effect for additional images */
+  .image-container {
+    position: relative;
+  }
+  
+  .hover-images {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    z-index: 10;
+    padding: 5px;
+  }
+  
+  .image-container:hover .hover-images {
+    display: block;
+  }
+  
+  /* Optional: Add a hover effect to the main image */
+  .product-image:hover {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+
+  .dropdown-toggle {
+    /**width: 150px; /* Adjust as needed */
+    text-align: left;
+  }
+  
+  .dropdown-menu {
+    max-height: 200px; /* Limit height and add scroll if needed */
+    overflow-y: auto;
+  }

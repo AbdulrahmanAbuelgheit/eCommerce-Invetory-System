@@ -1,0 +1,169 @@
+<div class="container-fluid p-4 animate__animated animate__fadeIn">
+  <div class="row g-4">
+    <!-- Branch List -->
+    <div class="col-md-3">
+      <div class="card shadow-lg h-100 branch-card">
+        <div class="card-header bg-primary-gradient text-white d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">
+            <i class="bi bi-shop-window me-2"></i>Store Locations
+          </h5>
+          <button class="btn btn-sm btn-light" (click)="createNewBranch()" title="Add New Branch">
+            <i class="bi bi-plus-lg"></i>
+          </button>
+        </div>
+        <div class="card-body p-0">
+          <div class="list-group list-group-flush">
+            <button
+              *ngFor="let branch of branches"
+              class="list-group-item list-group-item-action branch-item"
+              [class.active]="selectedBranch?._id === branch._id"
+              (click)="selectBranch(branch)"
+              @slideIn
+            >
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="flex-grow-1">
+                  <h6 class="mb-1 fw-semibold">{{ branch.name }}</h6>
+                  <small class="text-muted d-block">
+                    <i class="bi bi-geo-alt me-1"></i>{{ branch.location }}
+                  </small>
+                  <small class="text-muted">
+                    <i class="bi bi-phone me-1"></i>{{ branch.phone }}
+                  </small>
+                </div>
+                <div class="btn-group">
+                  <button
+                    class="btn btn-sm btn-outline-secondary"
+                    (click)="editBranch(branch); $event.stopPropagation()"
+                    title="Edit Branch"
+                  >
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-danger"
+                    (click)="deleteBranch(branch); $event.stopPropagation()"
+                    title="Delete Branch"
+                  >
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Branch Details -->
+    <div class="col-md-9">
+      <div *ngIf="selectedBranch" class="card shadow-lg inventory-card" @scaleIn>
+        <div class="card-header bg-dark-gradient text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="mb-0">
+                <i class="bi bi-box-seam me-2"></i>
+                {{ selectedBranch.name }} Inventory
+              </h5>
+            </div>
+            <!-- <button
+              class="btn btn-success btn-lg rounded-pill px-4"
+              (click)="openProductForm()"
+            >
+              <i class="bi bi-plus-circle me-2"></i>Add Product
+            </button> -->
+          </div>
+        </div>
+
+        <div class="card-body position-relative">
+          <div *ngIf="isLoading" class="loading-overlay">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+
+          <!-- Stock Grid -->
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div class="col" *ngFor="let item of pagedItems" @slideIn>
+              <div class="card h-100 product-card">
+                <div class="position-relative overflow-hidden">
+                  <img
+                    [src]="item.product.images[0]?.filePath"
+                    class="card-img-top product-image"
+                    alt="{{ item.product.name }}"
+                  />
+                  <div class="image-overlay"></div>
+                  <span class="badge bg-success stock-badge">
+                    <i class="bi bi-box2-heart me-1"></i>{{ item.quantity }} in stock
+                  </span>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title mb-2 text-truncate">{{ item.product.name }}</h5>
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge bg-purple">
+                      {{ item.product.categoryName }}
+                    </span>
+                    <span class="text-success small fw-bold">
+                      {{ item.product.mainStock }} in main
+                    </span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button
+                        class="btn btn-outline-primary btn-sm rounded-pill"
+                        (click)="openProductEditForm(item.product)"
+                        title="Edit Product Details"
+                      >
+                        <i class="bi bi-pencil-square"></i>
+                      </button>
+                      <button
+                        class="btn btn-outline-danger btn-sm rounded-pill"
+                        (click)="deleteProduct(item)"
+                        title="Delete"
+                      >
+                        <i class="bi bi-trash3"></i>
+                      </button>
+                    </div>
+                    <span class="text-muted small">
+                      {{ item.product.costPrice | currency }} / {{ item.product.soldPrice | currency }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <div class="d-flex justify-content-center mt-4" *ngIf="selectedBranch.stock?.length">
+            <nav>
+              <ul class="pagination pagination-lg">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                  <a class="page-link" (click)="onPageChange(currentPage - 1)">
+                    <i class="bi bi-chevron-left"></i>
+                  </a>
+                </li>
+                <li
+                  class="page-item"
+                  *ngFor="let page of pages"
+                  [class.active]="page === currentPage"
+                >
+                  <a class="page-link" (click)="onPageChange(page)">{{ page }}</a>
+                </li>
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                  <a class="page-link" (click)="onPageChange(currentPage + 1)">
+                    <i class="bi bi-chevron-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          <!-- Empty State -->
+          <div *ngIf="!selectedBranch.stock?.length" class="text-center py-5 empty-state">
+            <i class="bi bi-boxes display-5 text-muted mb-3"></i>
+            <h5 class="text-muted mb-0">No products found in this branch</h5>
+            <p class="text-muted small">Start by adding products using the button above</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

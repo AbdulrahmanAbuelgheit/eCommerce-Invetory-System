@@ -1,0 +1,40 @@
+<!-- inventory-list.component.html -->
+<div class="card shadow-sm">
+    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+      <h3 class="mb-0">Inventory Management</h3>
+      <button class="btn btn-light" (click)="openInventoryForm()">
+        <i class="bi bi-plus-lg"></i> Add Item
+      </button>
+    </div>
+  
+    <div class="card-body">
+      @if (error) {
+        <div class="alert alert-danger">{{ error }}</div>
+      }
+  
+      <app-table
+        [columns]="['Item Name', 'Category', 'Stock', 'Last Restock', 'Actions']"
+        [data]="inventory"
+        [loading]="loading"
+      >
+        <ng-template #rowTemplate let-item>
+          <td>{{ item.name }}</td>
+          <td>{{ item.category }}</td>
+          <td [class.text-danger]="item.stock < item.minimumStock">
+            {{ item.stock }} / {{ item.minimumStock }}
+          </td>
+          <td>{{ item.lastRestock | date:'mediumDate' }}</td>
+          <td>
+            <div class="btn-group">
+              <button class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-box-arrow-in-down"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteItem(item.id)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </td>
+        </ng-template>
+      </app-table>
+    </div>
+  </div>

@@ -1,0 +1,39 @@
+/* Add these styles for better UI */
+.manager-list {
+    .card {
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+  
+    .table {
+      th {
+        font-weight: 500;
+        background-color: #f8f9fa;
+      }
+  
+      td {
+        vertical-align: middle;
+      }
+  
+      .badge {
+        font-size: 0.9em;
+        padding: 0.5em 0.75em;
+      }
+    }
+  
+    .pagination {
+      .page-item.active .page-link {
+        background-color: #3f51b5;
+        border-color: #3f51b5;
+      }
+    }
+  
+    .form-control {
+      max-width: 300px;
+    }
+  
+    .btn-sm {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+    }
+  }

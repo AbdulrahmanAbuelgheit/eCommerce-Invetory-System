@@ -1,0 +1,37 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="category-form">
+  <div class="modal-header bg-primary text-white">
+    <h5 class="modal-title">
+      <i class="bi bi-tag me-2"></i>{{ isEditMode ? 'Edit' : 'New' }} Category
+    </h5>
+    <button type="button" class="btn-close btn-close-white" 
+            (click)="activeModal.dismiss()"></button>
+  </div>
+
+  <div class="modal-body py-4">
+    <div class="mb-3">
+      <label class="form-label fw-semibold">Category Name</label>
+      <input type="text" class="form-control form-control-lg" 
+             [class.is-invalid]="f['name'].touched && f['name'].errors"
+             formControlName="name" placeholder="Enter category name">
+      <div *ngIf="f['name'].touched && f['name'].errors" class="invalid-feedback mt-2">
+        <div *ngIf="f['name'].errors['required']">
+          <i class="bi bi-exclamation-circle me-2"></i>Category name is required
+        </div>
+        <div *ngIf="f['name'].errors['minlength']">
+          <i class="bi bi-exclamation-circle me-2"></i>Minimum 2 characters required
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer border-0">
+    <button type="button" class="btn btn-secondary" 
+            (click)="activeModal.dismiss()">Close</button>
+    <button type="submit" class="btn btn-primary" 
+            [disabled]="form.invalid || isSubmitting">
+      <span *ngIf="isSubmitting" 
+            class="spinner-border spinner-border-sm me-2"></span>
+      {{ isSubmitting ? (isEditMode ? 'Updating...' : 'Creating...') : (isEditMode ? 'Update' : 'Create') }}
+    </button>
+  </div>
+</form>

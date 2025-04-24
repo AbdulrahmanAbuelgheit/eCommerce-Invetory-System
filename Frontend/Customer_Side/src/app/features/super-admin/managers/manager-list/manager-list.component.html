@@ -1,0 +1,74 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h3>Managers</h3>
+    <div class="d-flex gap-2">
+      <input type="text" class="form-control" placeholder="Search managers..."
+             [(ngModel)]="searchQuery" (input)="onSearchInput()">
+      <button class="btn btn-primary" (click)="openManagerForm()">
+        <i class="bi bi-plus-lg me-2"></i>Add Manager
+      </button>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Branch</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="managers.length > 0; else noData">
+          <tr *ngFor="let manager of managers">
+            <td>{{ manager.firstName }} {{ manager.lastName }}</td>
+            <td>{{ manager.email }}</td>
+            <td>{{ manager.phone1 }}</td>
+            <td>{{ getBranchName(manager.branchId) || 'No branch assigned' }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'bg-success': manager.isActive,
+                'bg-danger': !manager.isActive
+              }">
+                {{ manager.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-warning me-2" (click)="openManagerForm(manager)">
+                <i class="bi bi-pencil-square"></i> Edit
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="deleteManager(manager._id)">
+                <i class="bi bi-trash"></i> Delete
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+    <!-- No Data State -->
+    <ng-template #noData>
+      <div class="text-center py-4">
+        <div *ngIf="searchQuery; else noManagers">
+          No managers found matching "{{ searchQuery }}"
+        </div>
+        <ng-template #noManagers>
+          No managers available
+        </ng-template>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-between align-items-center mt-3">
+    <ngb-pagination [collectionSize]="totalItems" 
+                    [(page)]="currentPage" 
+                    [pageSize]="itemsPerPage"
+                    (pageChange)="onPageChange($event)">
+    </ngb-pagination>
+  </div>
+</div>

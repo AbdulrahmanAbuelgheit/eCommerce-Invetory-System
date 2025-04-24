@@ -1,0 +1,14 @@
+.status-pending {
+    background-color: #ffd740; /* Yellow for pending */
+    color: black;
+  }
+  
+  .status-approved {
+    background-color: #69f0ae; /* Green for approved */
+    color: black;
+  }
+  
+  .status-rejected {
+    background-color: #ff5252; /* Red for rejected */
+    color: white;
+  }

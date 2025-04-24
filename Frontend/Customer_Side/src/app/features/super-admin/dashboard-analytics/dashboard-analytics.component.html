@@ -1,0 +1,173 @@
+<div class="dashboard-container">
+  <!-- Filters -->
+  <div class="filter-bar">
+    <!-- Year Filter -->
+    <mat-form-field appearance="outline">
+      <mat-label>Year</mat-label>
+      <mat-select [(value)]="selectedYear" (selectionChange)="onYearSelect($event)">
+        <mat-option *ngFor="let year of availableYears" [value]="year">
+          {{ year }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Branch Filter -->
+    <mat-form-field appearance="outline">
+      <mat-label>Branch</mat-label>
+      <mat-select [(value)]="selectedBranchId" (selectionChange)="onBranchSelect($event)">
+        <mat-option [value]="undefined">All Branches</mat-option>
+        <mat-option *ngFor="let branch of branches" [value]="branch._id">
+          {{ branch.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Seller Filter -->
+    <mat-form-field appearance="outline">
+      <mat-label>Seller</mat-label>
+      <mat-select [(value)]="selectedSellerId" (selectionChange)="onSellerSelect($event)">
+        <mat-option [value]="undefined">All Sellers</mat-option>
+        <mat-option *ngFor="let seller of sellers" [value]="seller._id">
+          {{ seller.firstName }} {{ seller.lastName }}
+          <span class="company-name">({{ seller.companyName }})</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <!-- Data Container -->
+  <div *ngIf="!isLoading">
+    <!-- Metrics Grid -->
+    <div class="metrics-grid">
+      <!-- Total Profit -->
+      <div class="metric-item profit">
+        <div class="metric-content">
+          <mat-icon>trending_up</mat-icon>
+          <div class="metric-values">
+            <div class="label">Total Profit</div>
+            <div class="value">{{ totalProfit | currency }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Total Orders -->
+      <div class="metric-item orders">
+        <div class="metric-content">
+          <mat-icon>shopping_cart</mat-icon>
+          <div class="metric-values">
+            <div class="label">Total Orders</div>
+            <div class="value">{{ totalOrders }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Total Revenue -->
+      <div class="metric-item revenue">
+        <div class="metric-content">
+          <mat-icon>attach_money</mat-icon>
+          <div class="metric-values">
+            <div class="label">Total Revenue</div>
+            <div class="value">{{ totalRevenue | currency }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Average Order Value -->
+      <div class="metric-item avg-order">
+        <div class="metric-content">
+          <mat-icon>avg_pace</mat-icon>
+          <div class="metric-values">
+            <div class="label">Avg. Order Value</div>
+            <div class="value">{{ avgOrderValue | currency }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Product -->
+      <div class="metric-item top-product">
+        <div class="metric-content">
+          <mat-icon>star</mat-icon>
+          <div class="metric-values">
+            <div class="label">Top Product</div>
+            <div class="value">{{ topProduct?.productName ?? 'N/A' }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Product Revenue -->
+      <div class="metric-item top-revenue">
+        <div class="metric-content">
+          <mat-icon>show_chart</mat-icon>
+          <div class="metric-values">
+            <div class="label">Top Product Revenue</div>
+            <div class="value">{{ topProduct?.totalRevenue ?? 0 | currency }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Container -->
+    <div class="paired-charts">
+      <!-- Monthly Profit Trend -->
+      <div class="chart-card line-chart">
+        <h4>Monthly Profit Trend</h4>
+        <ngx-charts-line-chart
+          [results]="monthlyProfitData"
+          [scheme]="vividScheme"
+          [curve]="curveShape"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          xAxisLabel="Month"
+          yAxisLabel="Profit"
+          [view]="[400, 280]">
+        </ngx-charts-line-chart>
+      </div>
+
+      <!-- Product Performance -->
+      <div class="chart-card bar-chart">
+        <h4>Product Performance</h4>
+        <ngx-charts-bar-vertical
+          [results]="productPerformance"
+          [scheme]="vividScheme"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          xAxisLabel="Product"
+          yAxisLabel="Revenue"
+          [view]="[400, 280]">
+        </ngx-charts-bar-vertical>
+      </div>
+    </div>
+
+    <!-- Recent Orders -->
+    <div class="recent-orders">
+      <h3>Recent Orders</h3>
+      <div class="orders-grid">
+        <div class="order-card" *ngFor="let order of recentOrders">
+          <div class="order-header">
+            <div class="date">{{ order.createdAt | date: 'mediumDate' }}</div>
+            <div class="status" [ngClass]="order.status.toLowerCase()">
+              {{ order.status }}
+            </div>
+          </div>
+          <div class="order-total">{{ order.totalPrice | currency }}</div>
+          <div class="products-count">{{ order.totalQty }} items</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Data State -->
+  <div *ngIf="!isLoading && !rawData" class="no-data">
+    <mat-icon>error_outline</mat-icon>
+    <p>No data available</p>
+  </div>
+</div>

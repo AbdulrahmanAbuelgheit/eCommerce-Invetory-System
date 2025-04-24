@@ -1,0 +1,209 @@
+
+body{
+    background-color: rgb(31,33,34);
+
+}
+
+
+
+
+.main-content-card{
+  margin: 4% 8%;
+  background-color: rgb(39,41,42);
+}
+
+.products-container{
+  background-color: rgb(31,33,34);
+
+}
+
+.filters-container{
+  background-color: rgb(39,41,42);
+}
+
+.filter-button{
+  background-color: #66FCF1 !important;
+  border: 2px solid #66FCF1;
+  color: rgb(39,41,42) !important;
+  transition: 0.3s;
+}
+
+.filter-button:hover{
+  background-color: rgb(39,41,42) !important;
+  border: 2px solid #66FCF1;
+  color: #66FCF1 !important;
+}
+
+.reset-button{
+  background-color: rgb(39,41,42) !important;
+  border: 2px solid #66FCF1;
+  color: #66FCF1 !important;
+  transition: 0.3s;
+}
+
+.reset-button:hover{
+  background-color: #66FCF1 !important;
+  border: 2px solid #66FCF1;
+  color: rgb(39,41,42) !important;
+}
+
+
+/* Product Card */
+
+.card-container{
+  padding: 10px;
+}
+
+.product-card{
+  background-color: rgb(39,41,42);
+  padding: 15px;
+  padding-top: 20px;
+  border: 0;
+}
+
+.card-img{
+  border-radius: 10px;
+  object-fit: contain;
+  height: 180px;
+  
+}
+
+.product-name{
+  font-weight: bold;
+  color: #dfdfdf;
+  font-size: large;
+}
+.product-price{
+  font-weight: bold;
+  color: #dfdfdf;
+  font-size: medium;
+}
+.product-icon{
+  color: #a6ff00;
+  font-size: medium;
+}
+
+.cart-button{
+  background-color: #66FCF1 !important;
+  border: 2px solid #66FCF1;
+  color: rgb(39,41,42) !important;
+  transition: 0.3s;
+  height: 30px;
+}
+
+.cart-button:hover{
+  background-color: rgb(39,41,42) !important;
+  border: 2px solid #66FCF1;
+  color: #66FCF1 !important;
+}
+
+.cart-button:disabled{
+  background-color: rgb(39,41,42) !important;
+  border: 2px solid #424242;
+  color: #848484 !important;
+}
+
+.view-button{
+  background-color: rgb(39,41,42) !important;
+  border: 2px solid #66FCF1;
+  color: #66FCF1 !important;
+  transition: 0.3s;
+  height: 30px;
+}
+
+.view-button:hover{
+  background-color: #66FCF1 !important;
+  border: 2px solid #66FCF1;
+  color: rgb(39,41,42) !important;
+}
+
+/* Image Slider */
+#imageSlider {
+    margin-bottom: 2rem;
+    border-radius: 10px;
+  }
+  
+  .carousel-item img {
+    height: 400px; /* Adjust height as needed */
+    object-fit: cover; /* Ensures images cover the area without distortion */
+    border-radius: 12px;
+  }
+  
+  /* Filters Section */
+  .card {
+    background-color: #1e1e1e; /* Dark background for filters */
+    border: 1px solid #333; /* Subtle border */
+  }
+  
+  .card-title {
+    color: #fff; /* White text for title */
+  }
+  
+  .form-label {
+    color: #fff; /* White text for labels */
+  }
+  
+  .form-control, .form-select {
+    background-color: #2a2a2a; /* Dark input background */
+    color: #fff; /* White text for inputs */
+    border: 1px solid #333; /* Subtle border */
+  }
+  
+  .btn-outline-secondary {
+    border-color: #333; /* Subtle border for search button */
+    color: #fff; /* White text for search button */
+  }
+  
+  .btn-outline-secondary:hover {
+    background-color: #007bff; /* Blue background on hover */
+    border-color: #007bff;
+  }
+  
+  /* Product Cards */
+  .card {
+    background-color: #1e1e1e; /* Dark background for cards */
+    border: 1px solid #333; /* Subtle border */
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+  }
+  
+  .fixed-image {
+    height: 300px; /* Fixed height for images */
+    object-fit: cover; /* Ensures images cover the area without distortion */
+  }
+  
+  .card-title {
+    color: #eae9e9; /* White text for product name */
+  }
+  
+  .card-text {
+    color: #ccc; /* Light gray text for price */
+  }
+  
+  .btn-primary {
+    background-color: #007bff; /* Blue accent for buttons */
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Pagination */
+  .pagination .page-link {
+    background-color: #1e1e1e; /* Dark background for pagination */
+    border: 1px solid #333; /* Subtle border */
+    color: #fff; /* White text */
+  }
+  
+  .pagination .page-item.active .page-link {
+    background-color: #007bff; /* Blue accent for active page */
+    border-color: #007bff;
+  }
+  
+  .pagination .page-link:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }

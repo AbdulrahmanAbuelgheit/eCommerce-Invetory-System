@@ -1,0 +1,65 @@
+<div class="container mt-4">
+    <h2>Admin Requests</h2>
+  
+    <mat-card>
+      <mat-card-content>
+        <!-- Search Input -->
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Search</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Search requests" />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+  
+        <!-- Requests Table -->
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+          <!-- Manager Column -->
+          <ng-container matColumnDef="manager">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Manager</th>
+            <td mat-cell *matCellDef="let request">
+              {{ request.managerId.firstName }} {{ request.managerId.lastName }}
+            </td>
+          </ng-container>
+  
+          <!-- Branch Column -->
+          <ng-container matColumnDef="branch">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Branch</th>
+            <td mat-cell *matCellDef="let request">{{ request.branchId.name }}</td>
+          </ng-container>
+  
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <td mat-cell *matCellDef="let request">
+              <mat-chip [ngClass]="getStatusClass(request.status)">
+                {{ request.status }}
+              </mat-chip>
+            </td>
+          </ng-container>
+  
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let request">
+              <button mat-icon-button color="primary" (click)="openDetailsDialog(request)">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" (click)="approveAll(request._id)">
+                <mat-icon>check_circle</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="rejectAll(request._id)">
+                <mat-icon>cancel</mat-icon>
+              </button>
+              <button mat-icon-button color="accent" (click)="openPartialApprovalDialog(request)">
+                <mat-icon>adjust</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+  
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  </div>

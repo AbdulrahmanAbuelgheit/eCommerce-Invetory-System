@@ -1,0 +1,78 @@
+<div class="container my-5">
+    <h2>Orders</h2>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dttrigger" id="ordersTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of sellerOrders let i = index">
+                <td>{{ i+1 }}</td>
+                <td>{{ order.totalPrice | currency }}</td>
+                <td>
+                    <span class="badge rounded-pill" 
+                          [ngClass]="{
+                            'bg-warning text-black': order.status === 'pending',
+                            'bg-info text-black': order.status === 'shipped',
+                            'bg-success': order.status === 'delivered',
+                            'bg-danger': order.status === 'canceled'
+                          }">
+                        {{ order.status }}
+                    </span>
+                </td>
+                <td>{{ order.createdAt | date: 'mediumDate' }}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" (click)="openOrderDetails(order)">
+                        <i class="bi bi-eye"></i> View Products
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Order Details Modal -->
+<div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="z-index: 9999; ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderDetailsModalLabel">Order Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="selectedOrder">
+                    <h4>Order ID: {{ selectedOrder._id }}</h4>
+                    <p><strong>Status:</strong> {{ selectedOrder.status }}</p>
+                    <p><strong>Total Price:</strong> {{ selectedOrder.totalPrice | currency }}</p>
+                    <p><strong>Total Quantity:</strong> {{ selectedOrder.totalQty }}</p>
+
+                    <h5 class="mt-4">Products</h5>
+                    <div *ngFor="let product of selectedOrder.products" class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img [src]="product.productImages[0].filePath" class="img-fluid rounded-start"
+                                    alt="Product Image">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.productName }}</h5>
+                                    <p class="card-text">Price: {{ product.price | currency }}</p>
+                                    <p class="card-text">Quantity: {{ product.requiredQty }}</p>
+                                    <p class="card-text">Total: {{ product.totalPrice | currency }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

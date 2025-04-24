@@ -1,0 +1,36 @@
+<form [formGroup]="addressForm">
+    <div class="row">
+    <!-- Governorate Select -->
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Governorate</label>
+      <select class="form-select" formControlName="gov">
+        <option value="">Select Governorate</option>
+        <option *ngFor="let gov of governorates" [value]="gov">
+          {{ gov }}
+        </option>
+      </select>
+    </div>
+
+    <!-- City Input -->
+    <div class="col-md-6 mb-3">
+      <label class="form-label">City/District</label>
+      <input type="text" class="form-control" formControlName="city">
+    </div>
+  </div>
+
+    <!-- Address Details -->
+    <div class="mb-3">
+      <label class="form-label">Street Details</label>
+      <textarea class="form-control" formControlName="street"
+                rows="3" placeholder="Street name, building number, floor, etc."></textarea>
+    </div>
+
+    <!-- Zip Code -->
+    <div class="mb-3">
+      <label class="form-label">Zip Code</label>
+      <input type="text" class="form-control" formControlName="zipCode">
+    </div>
+
+    <!--Submit Button-->
+    <button class="btn btn-primary" (click)="onSubmit()" [disabled]="!addressForm.valid"><i class="bi bi-plus me-1"></i>Save Address</button>
+  </form>

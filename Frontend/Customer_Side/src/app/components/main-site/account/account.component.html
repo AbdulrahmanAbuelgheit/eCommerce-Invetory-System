@@ -1,0 +1,68 @@
+<div class="container my-5" data-bs-theme="dark">
+    <div class="row">
+      <!-- Profile Section -->
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <img src="{{userData.image.filePath}}" 
+                 alt="Profile Photo" 
+                 class="rounded-circle mb-3 shadow border border-white">
+            <h4>{{userData.firstName|titlecase}} {{userData.lastName|titlecase}}</h4>
+            <p class="text-muted">{{userData.email}}</p>
+            <button class="btn btn-primary" (click)="openUpdateModal()"><i class="bi bi-pencil-square"></i> Edit Profile</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Contact Info Section -->
+      <div class="col-md-8">
+
+        <!--
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="mb-0"><i class="bi bi-phone me-1"></i>Phone Numbers</h5>
+          </div>
+          <div class="card-body">
+
+            
+            <div *ngFor="let phone of phoneNumbers" class="mb-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <span>{{ phone }}</span>
+                <button class="btn btn-danger btn-sm" (click)="removePhone(phone)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+  
+            <app-phone-input (phoneChange)="addPhone($event)"></app-phone-input>
+          </div>
+        </div>-->
+  
+        <!-- Addresses Section -->
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0"><i class="bi bi-house me-1"></i> Addresses</h5>
+          </div>
+          <div class="card-body">
+            <!-- Existing Addresses -->
+            <div *ngFor="let address of addresses let i = index" class="mb-4 shadow-sm p-3 border address">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6>{{ address.gov }}, {{ address.city }}</h6>
+                <button class="btn btn-danger btn-sm" (click)="removeAddress(address,i)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+              <p class="text-muted">{{ address.street  }} ZipCode:{{address.zipCode}}</p>
+            </div>
+
+            <hr class="hr hr-blurry"/>
+  
+            <!-- Add New Address -->
+            <app-address-input (addressChange)="loadAddresses($event)" (addressAdded)="loadAddresses($event)" ></app-address-input>
+          </div>
+        </div>
+        
+        <app-account-update *ngIf="showModal" [userData]="userData" (close)="closeUpdateModal()"></app-account-update>
+      </div>
+    </div>
+  </div>

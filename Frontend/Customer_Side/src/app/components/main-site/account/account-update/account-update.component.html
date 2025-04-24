@@ -1,0 +1,50 @@
+<div class="modal-overlay">
+    <div class="modal-content">
+      <!-- Close Button -->
+      <button class="close-button" (click)="onClose()">&times;</button>
+  
+      <!-- Update Form -->
+      <form (ngSubmit)="onSubmit()" #updateForm="ngForm">
+        <!-- Profile Picture -->
+        <div class="form-group">
+          <label for="profileImage">Profile Picture</label>
+          <input type="file" id="profileImage" (change)="onFileChange($event)" accept="image/*">
+          <img [src]="imagePreview || userData.image.filePath" alt="Profile Picture" class="profile-pic">
+        </div>
+  
+        <!-- First Name -->
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" name="firstName" [(ngModel)]="userData.firstName" required>
+        </div>
+  
+        <!-- Last Name -->
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" name="lastName" [(ngModel)]="userData.lastName" required>
+        </div>
+  
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" [(ngModel)]="userData.email" required>
+        </div>
+  
+        <!-- Phone -->
+        <div class="form-group">
+          <label for="phone1">Phone</label>
+          <input type="tel" id="phone1" name="phone1" [(ngModel)]="userData.phone1" required>
+        </div>
+  
+        <!-- Submit Button -->
+        <button type="submit" [disabled]="updateForm.invalid || isLoading">
+          {{ isLoading ? 'Updating...' : 'Update Profile' }}
+        </button>
+  
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+      </form>
+    </div>
+  </div>

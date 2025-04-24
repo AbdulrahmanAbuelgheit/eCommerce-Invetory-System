@@ -1,0 +1,84 @@
+<mat-toolbar>
+  <!-- Logo on the left -->
+  <a class="navbar-brand" href="#">
+    <img src="/assets/Logo.png" alt="Store Logo" width="40" height="40" class="d-inline-block align-text-top me-2">
+  </a>
+  <span class="logo-name me-2">GAMING STORE</span>
+  <button mat-button class="header-button" [routerLink]="['/']" routerLinkActive="active-header-item" ><mat-icon >home</mat-icon> Home</button>
+  <span class="flexer"></span>
+  <app-cart-icon [routerLink]="['/cart']"></app-cart-icon>
+  <!-- Account dropdown (if logged in) -->
+  @if(userService.isLoggedIn()) {
+  <a class="profile"  mat-raised-button [matMenuTriggerFor]="beforeMenu"><mat-icon >account_circle</mat-icon> Profile</a>
+  <mat-menu class="profile" #beforeMenu="matMenu" xPosition="before">
+    <button mat-menu-item [routerLink]="['/account']"><mat-icon>account_circle</mat-icon>Profile</button>
+    <button mat-menu-item [routerLink]="['/orders']"><mat-icon>list</mat-icon>Orders</button>
+    <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon>Logout</button>
+  </mat-menu>
+}
+@else {
+  <a class="profile"  mat-raised-button [routerLink]="['/login']"><mat-icon >login</mat-icon>Sign in</a>
+
+}
+
+</mat-toolbar>
+<!-- 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+  <div class="container-fluid">
+     
+    <a class="navbar-brand" href="#">
+      <img src="/assets/Logo.png" alt="Store Logo" width="40" height="40" class="d-inline-block align-text-top me-2">
+    </a>
+
+     
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+     
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+         
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" [routerLink]="['/']" routerLinkActive="active-link">
+            <i class="bi bi-house-fill m-1"></i>Home
+          </a>
+        </li>
+
+         
+        @if(userService.isLoggedIn()) {
+        <li class="nav-item" ngbDropdown>
+          <a class="nav-link" role="button" ngbDropdownToggle id="accountDropdown">
+            <i class="bi bi-person-fill m-1"></i>Account
+          </a>
+          <div class="dropdown-menu dropdown-menu-dark" ngbDropdownMenu aria-labelledby="accountDropdown">
+            <a ngbDropdownItem [routerLink]="['/account']">
+              <i class="bi bi-person-lines-fill m-1"></i>Profile
+            </a>
+            <a ngbDropdownItem [routerLink]="['/orders']">
+              <i class="bi bi-box2-heart-fill m-1"></i>Orders
+            </a>
+            <div class="dropdown-divider"></div>
+            <a ngbDropdownItem (click)="logout()">
+              <i class="bi bi-box-arrow-right m-1"></i>Logout
+            </a>
+          </div>
+        </li>
+        } @else {
+         
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active-link">
+            <i class="bi bi-key-fill m-1"></i>Login
+          </a>
+        </li>
+        }
+
+         
+        <li class="nav-item">
+          <app-cart-icon [routerLink]="['/cart']"></app-cart-icon>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav> -->

@@ -1,0 +1,126 @@
+<div class="container mt-4">
+    <h2>Cashiers</h2>
+    <button class="btn btn-primary mb-3" (click)="openAddCashierModal(addCashierModal)">Add New Cashier</button>
+  
+    <!-- Cashiers Table -->
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dttrigger" #cashiersTable>
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Branch</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cashier of cashiers">
+          <td>
+            <img [src]="cashier.image.filePath" alt="Cashier Image" class="img-thumbnail" width="50" />
+          </td>
+          <td>{{ cashier.firstName }} {{ cashier.lastName }}</td>
+          <td>{{ cashier.email }}</td>
+          <td>{{ cashier.phone1 }}</td>
+          <td>{{ cashier.branchId.name }}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-2" (click)="openUpdateCashierModal(cashier, updateCashierModal)">
+              Update
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteCashier(cashier._id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Add Cashier Modal -->
+<ng-template #addCashierModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add New Cashier</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="addCashier()" #cashierForm="ngForm">
+      <div class="mb-3">
+        <label for="firstName" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="firstName" [(ngModel)]="newCashier.firstName" name="firstName" required />
+      </div>
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="lastName" [(ngModel)]="newCashier.lastName" name="lastName" required />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" [(ngModel)]="newCashier.email" name="email" required />
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone</label>
+        <input type="text" class="form-control" id="phone" [(ngModel)]="newCashier.phone1" name="phone1" required />
+      </div>
+      <div class="mb-3">
+        <label for="ssn" class="form-label">SSN</label>
+        <input
+          type="text"
+          class="form-control"
+          id="ssn"
+          [(ngModel)]="newCashier.SSN"
+          name="SSN"
+          required
+          pattern="\d{14}"
+          title="SSN must be exactly 14 digits."
+        />
+        <small class="form-text text-muted">SSN must be exactly 14 digits.</small>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          [(ngModel)]="newCashier.password"
+          name="password"
+          required
+          minlength="8"
+          pattern="^(?=.*[A-Z]).{8,}$"
+          title="Password must be at least 8 characters long and contain at least one uppercase letter."
+        />
+        <small class="form-text text-muted">
+          Password must be at least 8 characters long and contain at least one uppercase letter.
+        </small>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="!cashierForm.form.valid">Add Cashier</button>
+    </form>
+  </div>
+</ng-template>
+  
+  <!-- Update Cashier Modal -->
+  <ng-template #updateCashierModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Update Cashier</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="updateCashier()">
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="firstName" [(ngModel)]="selectedCashier.firstName" name="firstName" required />
+        </div>
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="lastName" [(ngModel)]="selectedCashier.lastName" name="lastName" required />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" [(ngModel)]="selectedCashier.email" name="email" required />
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone</label>
+          <input type="text" class="form-control" id="phone" [(ngModel)]="selectedCashier.phone1" name="phone1" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Update Cashier</button>
+      </form>
+    </div>
+  </ng-template>

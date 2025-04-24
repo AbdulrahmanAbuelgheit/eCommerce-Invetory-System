@@ -1,0 +1,56 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="customer-form">
+  <div class="modal-header">
+    <h4 class="modal-title">{{ customer ? 'Edit' : 'Add' }} Customer</h4>
+    <button type="button" class="btn-close" (click)="activeModal.dismiss()"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3">
+      <!-- First Name -->
+      <div class="col-md-6">
+        <label class="form-label">First Name</label>
+        <input type="text" class="form-control" formControlName="firstName">
+        <div *ngIf="f['firstName'].touched && f['firstName'].errors" class="text-danger">
+          <div *ngIf="f['firstName'].errors['required']">First Name is required.</div>
+          <div *ngIf="f['firstName'].errors['minlength']">Must be at least 2 characters.</div>
+        </div>
+      </div>
+
+      <!-- Last Name -->
+      <div class="col-md-6">
+        <label class="form-label">Last Name</label>
+        <input type="text" class="form-control" formControlName="lastName">
+        <div *ngIf="f['lastName'].touched && f['lastName'].errors" class="text-danger">
+          <div *ngIf="f['lastName'].errors['required']">Last Name is required.</div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="col-12">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" formControlName="email">
+        <div *ngIf="f['email'].touched && f['email'].errors" class="text-danger">
+          <div *ngIf="f['email'].errors['required']">Email is required.</div>
+          <div *ngIf="f['email'].errors['email']">Invalid email format.</div>
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div class="col-md-6">
+        <label class="form-label">Phone</label>
+        <input type="tel" class="form-control" formControlName="phone1">
+        <div *ngIf="f['phone1'].touched && f['phone1'].errors" class="text-danger">
+          <div *ngIf="f['phone1'].errors['required']">Phone is required.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancel</button>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid || isSubmitting">
+      <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm"></span>
+      {{ isSubmitting ? 'Saving...' : (customer ? 'Update' : 'Save') }}
+    </button>
+  </div>
+</form>

@@ -1,0 +1,102 @@
+mat-toolbar{
+  background-color: #1e1e1e9a;
+  padding: 40px 8%;
+  backdrop-filter: blur(10px);
+}
+
+.header-button{
+  background-color: #1e1e1e !important;
+  color: #939393 !important;
+  transition: 0.3s;
+}
+
+.header-button:hover{
+  background-color: #272727 !important;
+  color: #66FCF1 !important;
+}
+
+.active-header-item{
+  background-color: #272727 !important;
+  color: #66FCF1 !important;
+}
+
+.flexer{
+  flex: 1 1 auto;
+}
+
+.profile{
+  background-color: #1e1e1e !important;
+  color: #66FCF1 !important;
+  border: 2px solid #66FCF1;
+  transition: 0.3s;
+}
+
+.profile:hover{
+  background-color: #66FCF1 !important;
+  color: #1e1e1e !important;
+  border: 2px solid #66FCF1;
+}
+
+.profile:active{
+  background-color: #66FCF1 !important;
+  color: #1e1e1e;
+  border: 2px solid #66FCF1;
+}
+
+.logo-name{
+  color: #d6d6d6;
+  font-weight: bold;
+}
+
+a{
+  margin: 0 10px;
+}
+
+
+/* Dark mode background */
+.navbar-dark.bg-dark {
+    background-color: #121212 !important; /* Deep dark background */
+    border-bottom: 1px solid #333; /* Subtle border for separation */
+  }
+  
+  /* Brand text styling */
+  .brand-text {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #fff; /* White text for contrast */
+  }
+  
+  /* Active link styling */
+  .active-link {
+    color: #007bff !important; /* Blue accent for active links */
+    font-weight: bold;
+  }
+  
+  /* Hover effect for nav links */
+  .nav-link:hover {
+    color: #007bff !important; /* Blue accent on hover */
+  }
+  
+  /* Dropdown menu styling */
+  .dropdown-menu-dark {
+    background-color: #1e1e1e; /* Slightly lighter dark background for dropdown */
+    border: 1px solid #333; /* Subtle border for dropdown */
+  }
+  
+  .dropdown-item {
+    color: #fff !important; /* White text for dropdown items */
+  }
+  
+  .dropdown-item:hover {
+    background-color: #007bff !important; /* Blue background on hover */
+    color: #fff !important; /* White text on hover */
+  }
+  
+  /* Cart icon styling (if needed) */
+  app-cart-icon {
+    color: #fff; /* White color for cart icon */
+  }
+  
+  app-cart-icon:hover {
+    color: #007bff; /* Blue accent on hover */
+  }

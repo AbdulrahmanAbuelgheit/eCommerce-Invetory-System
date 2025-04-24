@@ -1,0 +1,53 @@
+<div style="background-color: #1e1e1e; height: calc(100vh);">
+  <div class="container my-5">
+    <div class="row">
+      <!-- Product Images Carousel -->
+      <div class="col-md-6">
+        <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div *ngFor="let image of product.images; let i = index" class="carousel-item"
+              [ngClass]="{ active: i === 0 }">
+              <img [src]="image.filePath" class="d-block w-100 carousel-image" alt="Product Image">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Product Details -->
+      <div class="col-md-6">
+        <h1 class="product-name">{{ product.name }}</h1>
+        <p class="text-muted category">{{ product.categoryName }}</p>
+        <h2 class="price">{{ product.soldPrice | currency }}</h2>
+        <p class="description">{{ product.description }}</p>
+
+        <!-- Quantity Selector -->
+        <div class="mb-3">
+          <label for="quantity" class="form-label">Quantity</label>
+          <input
+            type="number"
+            id="quantity"
+            class="form-control quantity-input"
+            [(ngModel)]="selectedQuantity"
+            min="1"
+            [max]="product.mainStock"
+            (ngModelChange)="onQuantityChange()" 
+            (blur)="onQuantityBlur()"
+          />
+        </div>
+
+        <!-- Add to Cart Button -->
+        <button class="btn btn-primary add-to-cart-btn" (click)="addToCart()">
+          <i class="bi bi-cart-plus"></i> Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

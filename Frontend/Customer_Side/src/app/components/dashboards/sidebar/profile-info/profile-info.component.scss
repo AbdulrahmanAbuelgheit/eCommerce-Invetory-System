@@ -1,0 +1,30 @@
+:host * {
+  transition: all 0.5s ease-in-out;
+}
+
+img {
+  border-radius: 100%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.header-text {
+
+  height: 3rem;
+
+  > h2 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  > p {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+}
+
+.header-text-hide{
+  opacity: 0;
+  height: 0;
+}

@@ -1,0 +1,75 @@
+<div class="modal-header bg-success text-white">
+    <h4 class="modal-title">Add New Inventory Item</h4>
+    <button type="button" class="btn-close btn-close-white" (click)="activeModal.dismiss()"></button>
+  </div>
+  
+  <div class="modal-body">
+    @if (error) {
+      <div class="alert alert-danger">{{ error }}</div>
+    }
+  
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label class="form-label">Item Name</label>
+        <input type="text" class="form-control" formControlName="name">
+        @if (form.controls.name.invalid && (form.controls.name.dirty || form.controls.name.touched)) {
+          <div class="text-danger">
+            Item name is required (min 3 characters)
+          </div>
+        }
+      </div>
+      
+      <div class="mb-3">
+        <label class="form-label">Category</label>
+        <select class="form-select" formControlName="category">
+          <option value="">Select Category</option>
+          <option value="dairy">Dairy</option>
+          <option value="bakery">Bakery</option>
+          <option value="produce">Produce</option>
+          <option value="meat">Meat</option>
+          <option value="frozen">Frozen</option>
+        </select>
+        @if (form.controls.category.invalid && (form.controls.category.dirty || form.controls.category.touched)) {
+          <div class="text-danger">
+            Category is required
+          </div>
+        }
+      </div>
+      
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">Current Stock</label>
+            <input type="number" class="form-control" formControlName="stock">
+            @if (form.controls.stock.invalid) {
+              <div class="text-danger">
+                Stock must be 0 or higher
+              </div>
+            }
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">Minimum Stock Level</label>
+            <input type="number" class="form-control" formControlName="minimumStock">
+            @if (form.controls.minimumStock.invalid) {
+              <div class="text-danger">
+                Minimum stock must be at least 1
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+  
+      <div class="d-grid">
+        <button type="submit" class="btn btn-success" [disabled]="form.invalid || submitting">
+          @if (submitting) {
+            <span class="spinner-border spinner-border-sm"></span>
+          } @else {
+            Add Inventory Item
+          }
+        </button>
+      </div>
+    </form>
+  </div>

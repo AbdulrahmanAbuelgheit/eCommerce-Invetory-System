@@ -1,0 +1,63 @@
+<!-- src/app/components/cart/cart.component.html -->
+<div class="card" data-bs-theme="dark">
+  <div class="card-header" *ngIf="showActions">
+    <h5 class="mb-0">Shopping Cart</h5>
+  </div>
+  <div class="card-body">
+    <div *ngIf="cartService.cartItems().length === 0" class="text-center">
+      Your cart is empty.
+    </div>
+
+    <ul class="list-group">
+      <li *ngFor="let item of cartService.cartItems()" class="list-group-item shadow-sm border-0">
+        <div class="row">
+          <div class="col-md-2">
+            <img [src]="item.images[0].filePath" alt="{{ item.name }}" class="img-fluid shadow-sm">
+          </div>
+          <div class="col-md-4">
+            <h6>{{ item.name }}</h6>
+            <p class="mb-0">Price: ${{ item.soldPrice }}</p>
+          </div>
+          <div class="col-md-2" *ngIf="showActions">
+            <input 
+              type="number" 
+              class="form-control" 
+              [value]="item.quantity" 
+              [min]="1"
+              [max]="item.mainStock"
+              (change)="onQuantityChange(item, $event)"
+            >
+          </div>
+          
+          <div class="col-md-3" *ngIf="showActions">
+            <button 
+              class="btn btn-danger btn-sm m-1" 
+              (click)="cartService.removeFromCart(item._id)"
+            >
+            <i class="bi-trash"></i>
+              Remove
+            </button>
+            <button 
+              class="btn btn-dark btn-sm m-1" 
+              [routerLink]="['/products', item._id]"
+            >
+            <i class="bi-arrow-right-circle"></i>
+              Details
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <div class="row">
+      <div class="col">
+        <strong>Total: ${{ cartService.getCartTotal() | number:'1.2-2' }}</strong>
+      </div>
+      <div>
+        <button class="btn btn-primary m-1" [routerLink]="['/checkout']" *ngIf="showActions" ><i class="bi bi-bag-check-fill"></i> Checkout</button>
+        <button class="btn btn-danger m-1" (click)="clearCart()" *ngIf="showActions" ><i class="bi bi-trash-fill"></i> Empty Cart</button>
+      </div>
+    </div>
+  </div>
+</div>

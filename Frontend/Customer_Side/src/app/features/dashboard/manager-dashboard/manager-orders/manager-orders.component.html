@@ -1,0 +1,168 @@
+<div class="container mt-4">
+    <h2>Orders</h2>
+  
+    <!-- Tabs for Order Status -->
+    <nav  ngbNav #nav="ngbNav" class="nav-tabs" >
+      <ng-container ngbNavItem *ngIf="branchName == 'Website Branch'">
+        <a ngbNavLink>Pending/On The Way</a>
+        <ng-template ngbNavContent>
+          <h3 class="mt-3">Pending/ Shipped</h3>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Customer</th>
+                <th>Total Price</th>
+                <th *ngIf="branchName == 'Website Branch'">Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of pendingOnTheWayOrders">
+                <td>{{ order.createdAt }}</td>
+                <td>{{ order.customerId.firstName }} {{ order.customerId.lastName }}</td>
+                <td>{{ order.totalPrice }}</td>
+                <td *ngIf="branchName == 'Website Branch'"><span class="badge rounded-pill" 
+                    [ngClass]="{
+                      'bg-warning text-black': order.status === 'pending',
+                      'bg-info text-black': order.status === 'onTheWay',
+                      'bg-success': order.status === 'delivered',
+                      'bg-danger': order.status === 'canceled'
+                    }">
+                  {{ order.status }}
+              </span></td>
+                <td>
+                  <button class="btn btn-sm btn-info me-2" (click)="openViewDetailsModal(order, viewDetailsModal)">
+                    View Details
+                  </button>
+                    <button *ngIf="branchName == 'Website Branch'" class="btn btn-sm btn-warning me-2" (click)="openUpdateOrderModal(order, updateOrderModal)">
+                    Update Status
+                    </button>
+                  <button class="btn btn-sm btn-danger" (click)="cancelOrder(order._id)">
+                    Cancel Order
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </ng-container>
+  
+      <ng-container ngbNavItem>
+        <a ngbNavLink>Delivered</a>
+        <ng-template ngbNavContent>
+          <h3 class="mt-3">Delivered Orders</h3>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th *ngIf="branchName == 'Website Branch'">Customer</th>
+                <th *ngIf="branchName != 'Website Branch'">Customer</th>
+                <th>Total Price</th>
+                <th *ngIf="branchName == 'Website Branch'">Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of deliveredOrders">
+                <td>{{ order._id }}</td>
+                <td *ngIf="branchName == 'Website Branch'">{{ order.customerId.firstName }} {{ order.customerId.lastName }}</td>
+                <td *ngIf="branchName != 'Website Branch'">{{ order.customerName }}</td>
+                <td>{{ order.totalPrice }}</td>
+                <td *ngIf="branchName == 'Website Branch'">{{ order.status }}</td>
+                <td>
+                  <button class="btn btn-sm btn-info" (click)="openViewDetailsModal(order, viewDetailsModal)">
+                    View Details
+                  </button>
+                  <button class="btn btn-sm btn-danger" (click)="cancelOrder(order._id)">
+                    Cancel Order
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </ng-container>
+  
+      <ng-container ngbNavItem>
+        <a ngbNavLink>Cancelled</a>
+        <ng-template ngbNavContent>
+          <h3 class="mt-3">Cancelled Orders</h3>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th *ngIf="branchName == 'Website Branch'">Customer</th>
+                <th *ngIf="branchName != 'Website Branch'">Customer</th>
+                <th>Total Price</th>
+                <th *ngIf="branchName == 'Website Branch'">Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of cancelledOrders">
+                <td>{{ order._id }}</td>
+                <td *ngIf="branchName == 'Website Branch'">{{ order.customerId.firstName }} {{ order.customerId.lastName }}</td>
+                <td *ngIf="branchName != 'Website Branch'">{{ order.customerName }}</td>
+                <td>{{ order.totalPrice }}</td>
+                <td *ngIf="branchName == 'Website Branch'">{{ order.status }}</td>
+                <td>
+                  <button class="btn btn-sm btn-info" (click)="openViewDetailsModal(order, viewDetailsModal)">
+                    View Details
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </ng-container>
+    </nav>
+  
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  </div>
+  
+  <!-- View Details Modal -->
+  <ng-template #viewDetailsModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Order Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="selectedOrder">
+        <p><strong>Order ID:</strong> {{ selectedOrder._id }}</p>
+        <p *ngIf="branchName == 'Website Branch'"><strong>Customer:</strong> {{ selectedOrder.customerId.firstName }} {{ selectedOrder.customerId.lastName }}</p>
+        <p *ngIf="branchName != 'Website Branch'"><strong>Customer:</strong> {{ selectedOrder.customerName }}</p>
+        <p><strong>Phone:</strong> {{ selectedOrder.phone }}</p>
+        <p *ngIf="branchName == 'Website Branch'"><strong>Address:</strong> {{ selectedOrder.address.street }}, {{ selectedOrder.address.city }}, {{ selectedOrder.address.gov }}, {{ selectedOrder.address.zipCode }}</p>
+        <p><strong>Total Price:</strong> {{ selectedOrder.totalPrice }}</p>
+        <p *ngIf="branchName == 'Website Branch'"><strong>Status:</strong> {{ selectedOrder.status }}</p>
+        <h5>Products:</h5>
+        <ul>
+          <li *ngFor="let product of selectedOrder.products">
+            {{ product.productName }} - {{ product.price }} x {{ product.requiredQty }} = {{ product.totalPrice }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ng-template>
+  
+  <!-- Update Order Modal -->
+  <ng-template  #updateOrderModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Update Order Status</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="updateOrderStatus()">
+        <div class="mb-3">
+          <label for="status" class="form-label">Status</label>
+          <select class="form-control" id="status" [(ngModel)]="selectedOrder.status" name="status" required>
+            <option value="pending">Pending</option>
+            <option value="onTheWay">Shipped</option>
+            <option value="delivered">Delivered</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Status</button>
+      </form>
+    </div>
+  </ng-template>

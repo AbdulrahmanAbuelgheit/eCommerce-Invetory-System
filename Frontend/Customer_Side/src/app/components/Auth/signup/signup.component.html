@@ -1,0 +1,169 @@
+<div class="container-fluid gradient-bg">
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+      <div class="card futuristic-card wide-form">
+        <div class="card-body p-4 p-md-5">
+          <div class="text-center mb-4">
+            <img src="assets/logo.png" alt="GameTech Logo" class="logo wide-logo mb-3">
+            <h2 class="neon-text h4">CREATE ACCOUNT</h2>
+            <p class="small text-white">Join the gaming universe</p>
+          </div>
+
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <!-- First Name and Last Name -->
+            <div class="row g-2">
+              <div class="col-md-6">
+                <label class="form-label neon-label small text-white">First Name</label>
+                <input type="text" class="form-control futuristic-input form-control-sm" 
+                       formControlName="firstName" placeholder="John"
+                       [ngClass]="{'is-invalid': registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched}">
+                <div class="invalid-feedback" 
+                     *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+                  <div *ngIf="registerForm.get('firstName')?.errors?.['required']">First Name is required</div>
+                  <div *ngIf="registerForm.get('firstName')?.errors?.['minlength']">
+                    Minimum 2 characters required
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label neon-label small text-white">Last Name</label>
+                <input type="text" class="form-control futuristic-input form-control-sm" 
+                       formControlName="lastName" placeholder="Doe"
+                       [ngClass]="{'is-invalid': registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched}">
+                <div class="invalid-feedback" 
+                     *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+                  <div *ngIf="registerForm.get('lastName')?.errors?.['required']">Last Name is required</div>
+                  <div *ngIf="registerForm.get('lastName')?.errors?.['minlength']">
+                    Minimum 2 characters required
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="mt-2">
+              <label class="form-label neon-label small text-white">Phone Number</label>
+              <input type="tel" class="form-control futuristic-input form-control-sm" 
+                     formControlName="phone1" placeholder="01234567890"
+                     [ngClass]="{'is-invalid': registerForm.get('phone1')?.invalid && registerForm.get('phone1')?.touched}">
+              <div class="invalid-feedback" 
+                   *ngIf="registerForm.get('phone1')?.invalid && registerForm.get('phone1')?.touched">
+                Valid Egyptian number required (010, 011, 012, 015 followed by 8 digits)
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mt-2">
+              <label class="form-label neon-label small text-white">Email</label>
+              <input type="email" class="form-control futuristic-input form-control-sm" 
+                     formControlName="email" placeholder="john@example.com"
+                     [ngClass]="{'is-invalid': registerForm.get('email')?.invalid && registerForm.get('email')?.touched}">
+              <div class="invalid-feedback" 
+                   *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</div>
+                <div *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format</div>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mt-2 position-relative">
+              <label class="form-label neon-label small text-white">Password</label>
+              <div class="input-group">
+                <input [type]="showPassword ? 'text' : 'password'" 
+                       class="form-control futuristic-input form-control-sm" 
+                       formControlName="password" placeholder="••••••••"
+                       [ngClass]="{'is-invalid': registerForm.get('password')?.invalid && registerForm.get('password')?.touched}">
+                <button type="button" class="btn btn-link password-toggle" 
+                        (click)="togglePasswordVisibility()">
+                  <i class="fas" [class.fa-eye]="showPassword" [class.fa-eye-slash]="!showPassword"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback" 
+                   *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+                <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is required</div>
+                <div *ngIf="registerForm.get('password')?.errors?.['minlength']">
+                  Minimum 9 characters required
+                </div>
+                <div *ngIf="registerForm.get('password')?.errors?.['passwordPattern']">
+                  Must contain at least one uppercase letter and one number
+                </div>
+              </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mt-2 position-relative">
+              <label class="form-label neon-label small text-white">Confirm Password</label>
+              <div class="input-group">
+                <input [type]="showConfirmPassword ? 'text' : 'password'" 
+                       class="form-control futuristic-input form-control-sm" 
+                       [ngClass]="{'is-invalid': registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched}"
+                       formControlName="confirmPassword" placeholder="••••••••">
+                <button type="button" class="btn btn-link password-toggle" 
+                        (click)="toggleConfirmPasswordVisibility()">
+                  <i class="fas" [class.fa-eye]="showConfirmPassword" [class.fa-eye-slash]="!showConfirmPassword"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback" 
+                   *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched">
+                Passwords do not match
+              </div>
+            </div>
+
+            <!-- Terms & Conditions -->
+            <div class="mt-3 form-check">
+              <input type="checkbox" class="form-check-input" id="terms" 
+                     formControlName="terms"
+                     [ngClass]="{'is-invalid': registerForm.get('terms')?.invalid && registerForm.get('terms')?.touched}">
+              <label class="form-check-label neon-label small text-white" for="terms">
+                I agree to the Terms & Conditions
+              </label>
+              <div class="invalid-feedback" 
+                   *ngIf="registerForm.get('terms')?.invalid && registerForm.get('terms')?.touched">
+                You must accept the terms
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-neon w-100 btn-sm mt-3" 
+                    [disabled]="registerForm.invalid || isLoading">
+              <span *ngIf="!isLoading">REGISTER</span>
+              <span *ngIf="isLoading">
+                <i class="fas fa-spinner fa-spin"></i> Processing...
+              </span>
+            </button>
+
+            <!-- Login Link -->
+            <div class="text-center mt-2">
+              <p class="small text-white mb-0">Already have an account? 
+                <a href="/login" class="neon-link small">Sign in</a>
+              </p>
+            </div>
+          </form>
+
+          <!-- Seller Registration -->
+          <!-- <div class="text-center mb-4">
+            <a routerLink="/seller-signup" class="btn btn-seller-register py-2 px-4">
+              <div class="seller-register-content">
+                <span class="glow-text">🔐</span>
+                <span class="seller-register-text">
+                  <span class="empowered-text">Register as a Seller</span>
+                </span>
+                <div class="shine"></div>
+              </div>
+            </a>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Cubes Animation -->
+  <div class="floating-cubes">
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+  </div>
+</div>

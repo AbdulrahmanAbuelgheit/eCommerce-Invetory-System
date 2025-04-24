@@ -1,0 +1,55 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h3>Customers</h3>
+    <button class="btn btn-primary" (click)="openCustomerForm()">
+      <i class="bi bi-plus-lg me-2"></i>Add Customer
+    </button>
+  </div>
+
+  <div class="card-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Addresses</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="customers$ | async as customers; else loading">
+          <tr *ngFor="let customer of customers">
+            <td>{{ customer.firstName }} {{ customer.lastName }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.phone1 }}</td>
+            <td>
+              <ul>
+                <li *ngFor="let address of customer.addresses">
+                  {{ address.street }}, {{ address.city }}, {{ address.gov }}, {{ address.zipCode }}
+                </li>
+              </ul>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-warning me-2" (click)="openCustomerForm(customer)">
+                <i class="bi bi-pencil-square"></i> Edit
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="deleteCustomer(customer._id)">
+                <i class="bi bi-trash"></i> Delete
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+    <!-- Loading State -->
+    <ng-template #loading>
+      <div class="text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
